@@ -11,7 +11,7 @@
 2. **Uptime Kuma**：服務監控，之後我自己寫的排程程式也會用它的 Push 監控回報
 3. **LiteLLM Proxy**（搭配 PostgreSQL）：所有自架應用共用的 Claude API 閘道，每個應用一把虛擬金鑰並設預算上限
 
-背景：我已經有 Tailscale（這台機器在我的 tailnet 裡）和密碼管理器；這台機器**已經裝好 Docker，也已經有一個 PostgreSQL 在跑**；我的網域是 `chlinandys.com`，DNS 代管在 **Cloudflare**（免費方案）。這些服務**只給我自己在家裡網路與 Tailscale 內使用，不對公網開放**。之後還會在這台機器上跑 `scout`（我的科技新聞 CLI，產生靜態網頁），以及其他自架服務。
+背景：我已經有 Tailscale（這台機器在我的 tailnet 裡）和密碼管理器；這台機器**已經裝好 Docker，也已經有一個 PostgreSQL 在跑**；我的網域是 `chlinandy.com`，註冊商與 DNS 都在 **Cloudflare**（免費方案）。這些服務**只給我自己在家裡網路與 Tailscale 內使用，不對公網開放**。之後還會在這台機器上跑 `scout`（我的科技新聞 CLI，產生靜態網頁），以及其他自架服務。
 
 ## 硬規則
 
@@ -43,13 +43,13 @@
 | 方案 | 網址長相 | 需要 | 取捨 |
 |---|---|---|---|
 | A. Tailscale 憑證 | `https://cubi.<tailnet>.ts.net`、`https://cubi.<tailnet>.ts.net:8443` | tailnet 開啟 HTTPS；Caddy 能存取 tailscaled socket | 不用自己的網域；每台機器只有一個主機名，服務只能用不同 port 區分 |
-| B. 自有網域 + DNS-01 wildcard | `https://status.home.chlinandys.com`、`https://llm.home.chlinandys.com` | 用 xcaddy 編進 Cloudflare DNS 模組（`caddy-dns/cloudflare`）；一個權限最小的 Cloudflare API token | 網址最好記、每個服務一個子網域；DNS 記錄指向 tailnet IP（100.x），外網解析得到但連不上 |
+| B. 自有網域 + DNS-01 wildcard | `https://status.home.chlinandy.com`、`https://llm.home.chlinandy.com` | 用 xcaddy 編進 Cloudflare DNS 模組（`caddy-dns/cloudflare`）；一個權限最小的 Cloudflare API token | 網址最好記、每個服務一個子網域；DNS 記錄指向 tailnet IP（100.x），外網解析得到但連不上 |
 | C. Caddy 內部 CA（`tls internal`） | 任意內部名稱 | 每台裝置手動信任 Caddy 根憑證 | 不依賴外部；手機等裝置設定麻煩 |
 
-**我傾向 B**（`*.home.chlinandys.com`）。請確認：
-- `home.chlinandys.com` 底下目前沒有會衝突的記錄（用 `dig` 查，不要動既有記錄）。
-- API token 由我在 Cloudflare 後台建立：權限 `Zone → Zone → Read` 與 `Zone → DNS → Edit`，Zone Resources **只限 `chlinandys.com`**，可加上這台機器的對外 IP 限制與到期日；建好後由我填進 `.env` 的 `CF_API_TOKEN`。
-- wildcard 記錄 `*.home.chlinandys.com`（A 記錄，指向這台機器的 tailnet IP）由我手動建立，或我同意後由你用同一個 token 建立。**Proxy status 必須是 DNS only（灰色雲）**：Cloudflare 代理無法連到 100.x 的 tailnet 位址，開成橘色雲只會讓服務壞掉。
+**我傾向 B**（`*.home.chlinandy.com`）。請確認：
+- `home.chlinandy.com` 底下目前沒有會衝突的記錄（用 `dig` 查，不要動既有記錄）。
+- API token 由我在 Cloudflare 後台建立：權限 `Zone → Zone → Read` 與 `Zone → DNS → Edit`，Zone Resources **只限 `chlinandy.com`**，可加上這台機器的對外 IP 限制與到期日；建好後由我填進 `.env` 的 `CF_API_TOKEN`。
+- wildcard 記錄 `*.home.chlinandy.com`（A 記錄，指向這台機器的 tailnet IP）由我手動建立，或我同意後由你用同一個 token 建立。**Proxy status 必須是 DNS only（灰色雲）**：Cloudflare 代理無法連到 100.x 的 tailnet 位址，開成橘色雲只會讓服務壞掉。
 - 我的手機與筆電透過 Tailscale 連線時能解析並連上（tailnet IP 只有在 tailnet 內可達）。
 
 B 卡住時退回 A。
@@ -91,7 +91,7 @@ B 卡住時退回 A。
 ## Phase 2：Caddy
 
 - 只有 Caddy 對外發布 port（80、443，加上方案 A 的額外 port）；其他服務只在 `homelab` Docker network 內，**不發布到 host**。
-- 依 Q1 設定 TLS。方案 A：讓 Caddy 從 tailscaled 取得 `*.ts.net` 憑證（掛載 tailscaled socket，必要時設定 tailscaled 允許該使用者取憑證，以官方文件為準）。方案 B：用 xcaddy 編譯含 `caddy-dns/cloudflare` 的 image（Dockerfile 裡釘住 Caddy 與模組版本），`CF_API_TOKEN` 放 `.env`；DNS-01 驗證若卡在「等待記錄傳播」，在 `tls` 區塊加 `resolvers 1.1.1.1`；用一張 wildcard 憑證 `*.home.chlinandys.com` 涵蓋所有服務，避免每個子網域都出現在憑證透明度紀錄。
+- 依 Q1 設定 TLS。方案 A：讓 Caddy 從 tailscaled 取得 `*.ts.net` 憑證（掛載 tailscaled socket，必要時設定 tailscaled 允許該使用者取憑證，以官方文件為準）。方案 B：用 xcaddy 編譯含 `caddy-dns/cloudflare` 的 image（Dockerfile 裡釘住 Caddy 與模組版本），`CF_API_TOKEN` 放 `.env`；DNS-01 驗證若卡在「等待記錄傳播」，在 `tls` 區塊加 `resolvers 1.1.1.1`；用一張 wildcard 憑證 `*.home.chlinandy.com` 涵蓋所有服務，避免每個子網域都出現在憑證透明度紀錄。
 - Caddyfile 用 snippet 抽出共用設定（壓縮、安全標頭、存取紀錄），每個服務一個 site block，方便之後新增。
 - 預留一個**註解掉**的 `scout` 靜態網站區塊：`file_server`，root 指向 `/srv/scout-site`（bind mount 到 host 的 `/opt/homelab/data/scout-site`），等我部署 scout 後再啟用。
 
