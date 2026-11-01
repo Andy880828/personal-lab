@@ -1,0 +1,23 @@
+name: scout
+on:
+  push:
+    paths: ["scout/**", ".github/workflows/scout.yml"]
+  pull_request:
+    paths: ["scout/**", ".github/workflows/scout.yml"]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: scout
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: scout/go.mod
+      - run: go vet ./...
+      - run: go test ./...
+      - run: go run ./cmd/scout describe --json

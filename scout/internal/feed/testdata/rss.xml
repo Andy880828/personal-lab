@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Example</title>
+  <atom:link href="https://example.com/feed" rel="self"/>
+  <link>https://example.com/</link>
+  <item>
+    <title>First &amp; best&nbsp;post</title>
+    <link>https://example.com/posts/1?utm_source=rss</link>
+    <description><![CDATA[<p>Hello <b>world</b></p>]]></description>
+    <pubDate>Fri, 31 Oct 2026 10:00:00 +0000</pubDate>
+    <dc:creator>Alice</dc:creator>
+    <comments>https://example.com/posts/1#comments</comments>
+  </item>
+  <item>
+    <title>Guid only</title>
+    <guid isPermaLink="true">https://example.com/posts/2</guid>
+    <pubDate>not a date</pubDate>
+  </item>
+  <item>
+    <title>No link at all</title>
+  </item>
+</channel>
+</rss>

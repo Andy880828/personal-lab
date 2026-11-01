@@ -1,0 +1,4 @@
+{"hits":[
+ {"objectID":"100","title":"Show thing","url":"https://thing.dev/","author":"a","points":250,"num_comments":80,"created_at_i":1793440000},
+ {"objectID":"101","title":"Ask HN: What?","url":"","author":"b","points":40,"num_comments":12,"created_at_i":1793441000,"story_text":"<p>Question &amp; body</p>"}
+]}

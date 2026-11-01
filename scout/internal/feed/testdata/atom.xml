@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Atom</title>
+  <entry>
+    <title type="html">Atom &amp;lt;entry&amp;gt; &lt;b&gt;bold&lt;/b&gt;</title>
+    <link rel="self" href="https://example.org/self/1"/>
+    <link rel="alternate" type="text/html" href="https://example.org/a/1/"/>
+    <published>2026-10-30T08:00:00Z</published>
+    <updated>2026-10-31T08:00:00Z</updated>
+    <author><name>Bob</name></author>
+    <summary>Short summary</summary>
+  </entry>
+  <entry>
+    <title>Bare link</title>
+    <link href="https://example.org/a/2"/>
+    <updated>2026-10-31T09:00:00+08:00</updated>
+  </entry>
+</feed>
