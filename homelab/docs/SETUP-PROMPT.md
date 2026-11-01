@@ -11,7 +11,7 @@
 2. **Uptime Kuma**：服務監控，之後我自己寫的排程程式也會用它的 Push 監控回報
 3. **LiteLLM Proxy**（搭配 PostgreSQL）：所有自架應用共用的 Claude API 閘道，每個應用一把虛擬金鑰並設預算上限
 
-背景：我已經有 Tailscale（這台機器在我的 tailnet 裡）和密碼管理器。這些服務**只給我自己在家裡網路與 Tailscale 內使用，不對公網開放**。之後還會在這台機器上跑 `scout`（我的科技新聞 CLI，產生靜態網頁），以及其他自架服務。
+背景：我已經有 Tailscale（這台機器在我的 tailnet 裡）和密碼管理器；這台機器**已經裝好 Docker，也已經有一個 PostgreSQL 在跑**；我的網域是 `chlinandys.com`，DNS 代管在 **AWS Route 53**。這些服務**只給我自己在家裡網路與 Tailscale 內使用，不對公網開放**。之後還會在這台機器上跑 `scout`（我的科技新聞 CLI，產生靜態網頁），以及其他自架服務。
 
 ## 硬規則
 
@@ -43,12 +43,18 @@
 | 方案 | 網址長相 | 需要 | 取捨 |
 |---|---|---|---|
 | A. Tailscale 憑證 | `https://cubi.<tailnet>.ts.net`、`https://cubi.<tailnet>.ts.net:8443` | tailnet 開啟 HTTPS；Caddy 能存取 tailscaled socket | 不用自己的網域；每台機器只有一個主機名，服務只能用不同 port 區分 |
-| B. 自有網域 + DNS-01 wildcard | `https://status.home.<我的網域>`、`https://llm.home.<我的網域>` | 網域的 DNS 在支援的供應商（如 Cloudflare）、權限最小的 API token、自編含 DNS 模組的 Caddy | 網址最好記、每個服務一個子網域；DNS 記錄指向 tailnet IP（100.x），外網解析得到但連不上 |
+| B. 自有網域 + DNS-01 wildcard | `https://status.home.chlinandys.com`、`https://llm.home.chlinandys.com` | 用 xcaddy 編進 Route 53 DNS 模組（`caddy-dns/route53`）；一組權限最小的 AWS IAM 憑證 | 網址最好記、每個服務一個子網域；DNS 記錄指向 tailnet IP（100.x），外網解析得到但連不上 |
 | C. Caddy 內部 CA（`tls internal`） | 任意內部名稱 | 每台裝置手動信任 Caddy 根憑證 | 不依賴外部；手機等裝置設定麻煩 |
 
-我有自己的網域就建議 B，沒有就建議 A。
+**我傾向 B**（`*.home.chlinandys.com`）。請確認：
+- `home.chlinandys.com` 底下目前沒有會衝突的記錄（用 `dig` 查，不要動既有記錄）。
+- IAM 政策只允許這個 hosted zone 的 `route53:ChangeResourceRecordSets`、`route53:ListResourceRecordSets`，加上 `route53:GetChange` 與 `route53:ListHostedZonesByName`；把政策 JSON 給我，由我在 AWS console 建立 IAM user 和 access key，再填進 `.env`。
+- wildcard 記錄 `*.home.chlinandys.com` 指向這台機器的 tailnet IP，由我手動在 Route 53 建立，或我同意後由你用同一組憑證建立（那需要把 ChangeResourceRecordSets 用在 A 記錄上，政策相同）。
+- 我的手機與筆電透過 Tailscale 連線時能解析並連上（tailnet IP 只有在 tailnet 內可達）。
 
-**Q2.** 要不要安裝 Docker（如果還沒裝）？用官方 apt repository 安裝。
+B 卡住時退回 A。
+
+**Q2. 既有 PostgreSQL 的用法**。盤點它的版本、是容器還是系統服務、資料在哪、目前有哪些資料庫與使用者、是否有備份。我的預設是**沿用它**：為 LiteLLM 建立專屬的資料庫與權限最小的使用者（只擁有自己的資料庫），不碰既有資料庫；LiteLLM 透過 Docker network 連線（必要時把既有容器加入 `homelab` network，或用 host 位址）。如果版本太舊、它是別的專案私有的、或連線方式會迫使我改動既有服務，就回報並建議改開獨立的 PostgreSQL 容器，由我決定。
 
 **Q3.** 每個服務的子網域或 port 安排（給出你的建議表）。
 
@@ -68,7 +74,7 @@
 ├── .env.example           # 同樣的鍵、假值（進 git）
 ├── caddy/
 │   ├── Caddyfile
-│   └── Dockerfile         # 只有方案 B 需要（xcaddy 加 DNS 模組）
+│   └── Dockerfile         # 方案 B：xcaddy 加 caddy-dns/route53
 ├── litellm/
 │   └── config.yaml
 ├── scripts/
@@ -77,7 +83,7 @@
 │   ├── ARCHITECTURE.md    # 架構圖、資料流、為什麼這樣設計
 │   └── PROGRESS.md        # §0 接手速覽 + 驗證紀錄
 └── data/                  # bind mount 的資料（不進 git）
-    ├── caddy/ uptime-kuma/ postgres/
+    ├── caddy/ uptime-kuma/      # 沿用既有 PostgreSQL 時不需要 postgres/
 ```
 
 文件一律繁體中文，技術名詞保留英文。
@@ -85,7 +91,7 @@
 ## Phase 2：Caddy
 
 - 只有 Caddy 對外發布 port（80、443，加上方案 A 的額外 port）；其他服務只在 `homelab` Docker network 內，**不發布到 host**。
-- 依 Q1 設定 TLS。方案 A：讓 Caddy 從 tailscaled 取得 `*.ts.net` 憑證（掛載 tailscaled socket，必要時設定 tailscaled 允許該使用者取憑證，以官方文件為準）。方案 B：用 xcaddy 編譯含 DNS 模組的 image，API token 放 `.env`。
+- 依 Q1 設定 TLS。方案 A：讓 Caddy 從 tailscaled 取得 `*.ts.net` 憑證（掛載 tailscaled socket，必要時設定 tailscaled 允許該使用者取憑證，以官方文件為準）。方案 B：用 xcaddy 編譯含 `caddy-dns/route53` 的 image（Dockerfile 裡釘住 Caddy 與模組版本），AWS 憑證以環境變數（`AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY`、`AWS_REGION`）放 `.env`；用一張 wildcard 憑證 `*.home.chlinandys.com` 涵蓋所有服務，避免每個子網域都出現在憑證透明度紀錄。
 - Caddyfile 用 snippet 抽出共用設定（壓縮、安全標頭、存取紀錄），每個服務一個 site block，方便之後新增。
 - 預留一個**註解掉**的 `scout` 靜態網站區塊：`file_server`，root 指向 `/srv/scout-site`（bind mount 到 host 的 `/opt/homelab/data/scout-site`），等我部署 scout 後再啟用。
 
@@ -97,13 +103,13 @@
 - Uptime Kuma 沒有建立監控項目的 REST API，所以請在 `README.md` 列出建議的監控清單，我照著在介面上新增：
   - 每個 Caddy 網址（HTTPS，順便監看憑證到期）
   - LiteLLM 健康檢查（從 Kuma 容器內打 `http://litellm:4000` 的 liveliness 路徑，以文件為準）
-  - PostgreSQL（TCP `postgres:5432`）
+  - PostgreSQL（TCP，位址依 Q2 的連線方式）
   - 一個 Push 監控範例，並說明之後我的排程程式怎麼回報（`curl` Push URL）
 - 通知管道先不設；我目前透過 Claude session 溝通，之後再決定要不要接 Telegram。
 
-## Phase 4：LiteLLM + PostgreSQL
+## Phase 4：LiteLLM（使用 PostgreSQL）
 
-- PostgreSQL：明確版本的官方 image、資料 bind mount、密碼放 `.env`，不發布 port。
+- PostgreSQL：依 Q2。沿用既有實例時，建立 `litellm` 資料庫與同名使用者（隨機密碼放 `.env`），只授權該資料庫，**不修改既有資料庫、使用者與設定檔**；若需要改 `pg_hba.conf` 或 `listen_addresses` 才連得到，先回報。改開獨立容器時：明確版本的官方 image、資料 bind mount、不發布 port。
 - LiteLLM：明確版本的官方 image，連到 PostgreSQL（虛擬金鑰與花費紀錄需要資料庫）。
   - `.env`：`ANTHROPIC_API_KEY`（我提供）、`LITELLM_MASTER_KEY`（隨機產生，`sk-` 開頭）、`LITELLM_SALT_KEY`（隨機產生，用來加密存進資料庫的憑證，**設定後不可更改**，要在文件中強調）、`DATABASE_URL`。
   - 如果該版本支援關閉 telemetry，就關閉。
@@ -122,7 +128,7 @@
 
 ## Phase 5：備份與更新
 
-- `scripts/backup.sh`：`pg_dump` LiteLLM 資料庫、打包 `data/caddy`、`data/uptime-kuma` 與 `.env`，存到 `/opt/homelab/backups/`，保留最近 7 份。**先手動跑一次並驗證可以還原**（至少確認 dump 檔能被 `pg_restore --list` 讀取）。要不要設成每日排程、要不要另存一份到別台機器，問我。
+- `scripts/backup.sh`：`pg_dump` LiteLLM 資料庫（只備份 `litellm`，既有資料庫的備份另外問我）、打包 `data/caddy`、`data/uptime-kuma` 與 `.env`，存到 `/opt/homelab/backups/`，保留最近 7 份。**先手動跑一次並驗證可以還原**（至少確認 dump 檔能被 `pg_restore --list` 讀取）。要不要設成每日排程、要不要另存一份到別台機器，問我。
 - 更新流程寫進 `README.md`：改 tag → `docker compose pull` → `docker compose up -d` → 檢查健康狀態 → commit。**不要**裝 Watchtower 之類的自動更新。
 
 ## Phase 6：驗證（全部實測，結果寫進 `docs/PROGRESS.md`）
