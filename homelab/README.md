@@ -13,15 +13,17 @@
 - `scout` 不使用 LiteLLM：它不呼叫 LLM，由 Claude session 直接操作。scout 的靜態網頁之後交給 Caddy 的 `file_server` 提供（prompt 已預留區塊）。
 - 之後的自架 LLM 應用（文件歸檔、記帳分類等，見 [`../docs/IDEAS.md`](../docs/IDEAS.md)）各自向 LiteLLM 申請虛擬金鑰。
 
-## 前置：DNS 搬到 Cloudflare（架設前完成）
+## 前置：DNS 與註冊商搬到 Cloudflare（架設前完成）
 
-現況（2026-11-01 查詢）：註冊商 **GoDaddy**、DNS 代管 **Route 53**、未啟用 DNSSEC、apex 沒有 A／MX／TXT 記錄，**網域 2026-11-17 到期**。
+現況（2026-11-01 查詢）：註冊商 **GoDaddy**、**網域 2026-11-17 到期**、未啟用 DNSSEC。
+**Route 53 hosted zone 已停用，但註冊局仍指向 AWS nameserver → 網域目前完全無法解析（SERVFAIL）**，要盡快完成步驟 1–2。
 
-| # | 步驟 | 注意 |
-|---|---|---|
-| 0 | 到 GoDaddy 確認續約狀態 | RDAP 顯示 `client renew prohibited`；先確認不會在 11/17 失效 |
-| 1 | 匯出 Route 53 的完整記錄（`aws route53 list-resource-record-sets` 或 console） | 公開 DNS 查不到子網域，以匯出結果為準 |
-| 2 | Cloudflare 免費方案新增 `chlinandys.com`，逐筆核對記錄 | 指向 tailnet／內網 IP 的記錄設 **DNS only** |
-| 3 | GoDaddy 解除鎖定，把 nameserver 改成 Cloudflare 給的兩組 | 未啟用 DNSSEC，不必先撤 DS 記錄 |
-| 4 | Cloudflare 顯示 Active、`dig NS chlinandys.com` 回 Cloudflare 後，觀察 48 小時再刪 Route 53 hosted zone | 刪 zone 是不可逆操作 |
-| 5 | （選擇）把註冊商轉到 Cloudflare Registrar | 成本價續約；需先用 Cloudflare DNS；轉移會加一年。若 11/12 前來不及完成，先在 GoDaddy 續約再轉 |
+| # | 步驟 | 狀態 | 注意 |
+|---|---|---|---|
+| 1 | Cloudflare 免費方案新增 `chlinandys.com`，補回需要的記錄 | ⬜ | 指向 tailnet／內網 IP 的記錄設 **DNS only** |
+| 2 | GoDaddy 關閉 Domain Lock，nameserver 改成 Cloudflare 指定的兩組 | ⬜ | 確認 WHOIS 聯絡信箱收得到信 |
+| 3 | Cloudflare 顯示 Active | ⬜ | 驗證：`dig NS chlinandys.com` 回 Cloudflare |
+| 4 | GoDaddy 取得 EPP 授權碼 | ⬜ | 轉移鎖保持關閉 |
+| 5 | Cloudflare → Transfer Domains，貼 EPP 碼並付款（加一年） | ⬜ | **11/12 前未開始就先在 GoDaddy 續約** |
+| 6 | 到 GoDaddy 待轉移頁面手動同意 | ⬜ | 否則最長等 5 天；驗證：RDAP 註冊商變成 Cloudflare |
+| — | Route 53 hosted zone | ✅ 已停用 | |
