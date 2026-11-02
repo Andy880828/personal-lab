@@ -19,7 +19,7 @@
 | 第二輪：修閃爍、科學層、指令列、雙螺旋、互動 | [x] 2026-11-02 | [Andy880828/Personal-Page#2](https://github.com/Andy880828/Personal-Page/pull/2) 已合併 |
 | 第三輪：正式站 impeccable 審視修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#3](https://github.com/Andy880828/Personal-Page/pull/3) 已合併；偵測器 0 項；紀錄在 Personal-Page `docs/REVIEW.md` |
 | 第四輪：side-tab 修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#4](https://github.com/Andy880828/Personal-Page/pull/4) 已合併；正式站偵測器只剩 tier 0 SVG 雙螺旋的 advisory |
-| 第五輪計畫：海洋 × 代碼深度融合、分層生物、內容轉向 | [x] 2026-11-02 計畫完成 | 見下方「第五輪計畫」；尚未實作，等 Opus 派工 |
+| 第五輪計畫：海洋 × 代碼深度融合、分層生物、內容轉向 | [x] 2026-11-02 計畫完成、開放問題已回答 | 見下方「第五輪計畫」；尚未實作，等 Opus 派工；Sketchfab 模型由 Andy 以 glTF 格式下載到 `raw/models/` |
 | 第五輪實作 Phase A 內容轉向與去 AI 味 | [ ] | |
 | 第五輪實作 Phase B 頂端列、儀表、拿掉探測器 | [ ] | |
 | 第五輪實作 Phase C 模型素材管線 | [ ] | |
@@ -280,8 +280,8 @@ GPU 分級（`lib/gpu.ts`）：以 `WEBGL_debug_renderer_info` + `devicePixelRat
 
 | id | 名稱 | 一句話（草稿，Opus 可潤但不得出現 §2.4 禁用字） | strengths（草稿） | tools |
 |---|---|---|---|---|
-| `mining` | 資料探勘與分析 / Data Mining | 從雜訊裡找訊號：一條溪的 eDNA 定序、一家工廠的產線紀錄、我自己的投資紀錄，做法是同一套。 | 資料清理與特徵整理、統計檢定與時間序列、定序資料流（eDNA、BLAST）、把結論寫成可以被重算的筆記 | Python、Pandas、R、SQL、BLAST+、Cutadapt、USEARCH（**待 Andy 補**：Polars／scikit-learn／statsmodels 有沒有在用） |
-| `viz` | 數據可視化 / Data Visualization | 讓圖表先回答問題，再談好看；這個網站本身就是一張把深度換算成壓力、水溫、光的圖。 | 圖表選型與尺度（線性、對數）、儀表板設計、互動式與 3D 視覺化、配色與可讀性 | Matplotlib、Plotly、Three.js、Tailwind（**待 Andy 補**：ECharts／D3／Streamlit／Power BI） |
+| `mining` | 資料探勘與分析 / Data Mining | 從雜訊裡找訊號：一條溪的 eDNA 定序、一家工廠的產線紀錄、我自己的投資紀錄，做法是同一套。 | 資料清理與特徵整理、統計檢定與時間序列、定序資料流（eDNA、BLAST）、把結論寫成可以被重算的筆記 | Python、Pandas、R、SQL、BLAST+、Cutadapt、USEARCH |
+| `viz` | 數據可視化 / Data Visualization | 讓圖表先回答問題，再談好看；這個網站本身就是一張把深度換算成壓力、水溫、光的圖。 | 圖表選型與尺度（線性、對數）、儀表板設計、互動式與 3D 視覺化、配色與可讀性 | Python 繪圖（Matplotlib）、Three.js、Tailwind CSS（只列站上已有的工具，不新增） |
 | `workflow` | 工作流程數位化 / Workflow Digitization | 把靠人記、靠 Excel 傳的流程做成系統：表單、排程、報表、通知，而且出錯看得到。 | 需求盤點與資料模型、表單與審核流程、排程與背景工作、自架服務與監控 | ASP.NET Core、FastAPI、Supabase、SQL Server、PostgreSQL、Caddy、Linux、Vercel |
 | `agent` | Agent 應用 / Agent Applications | 讓程式替人跑完整段流程（查漏洞、整理資訊、轉逐字稿），每一步的輸出都能被檢查。 | 可被程式呼叫的 CLI（JSON 輸出、穩定錯誤碼）、流程拆解與權限邊界、本地執行與資料不外流、結果驗證 | Go、Python、Claude Code、LiteLLM、Linux |
 | `web` | 網站全端 / Web | 從切版到 API 到資料庫，一個人把網站做到能上線、能維護。 | 響應式介面、元件化與狀態管理、RESTful API、關聯式資料庫設計、前端測試 | Vue 3、Nuxt 4、React、TypeScript、Tailwind CSS、Vite、C#、Express.js、Figma |
@@ -299,7 +299,7 @@ GPU 分級（`lib/gpu.ts`）：以 `WEBGL_debug_renderer_info` + `devicePixelRat
 | local-transcribe | workflow、agent | 保留現在的描述，已經夠具體 |
 | homelab | workflow | 「家中小電腦的 Caddy、Uptime Kuma、LiteLLM：一份從盤點到驗證的架設手冊，照著做就能重建。」 |
 | andy-claude-kit | agent | 「一行指令在任何電腦重建我的開發環境：工程規則、語言 rules、唯讀審查流程。」 |
-| stock-analysis-app | mining、viz | 「投資紀錄與回顧 App：每一筆進出都留紀錄，再用圖表回頭看決策對不對。」（**待 Andy 補細節**） |
+| stock-analysis-app | mining、viz | 「投資紀錄與回顧 App：每一筆進出都留紀錄，再用圖表回頭看決策對不對。」（highlight 維持兩條） |
 | Trim2Sort | mining、workflow | 保留 |
 | fitness_challenge | viz、web | 保留（InBody 數據與難度係數就是可視化與公平計分） |
 | nature-footprint-studio | web | 保留 |
@@ -309,7 +309,7 @@ GPU 分級（`lib/gpu.ts`）：以 `WEBGL_debug_renderer_info` + `devicePixelRat
 
 ### 2.3 個人簡介與經歷
 
-- `profile.ts` `intro[1]`：「後來轉進軟體：從 Vue、ASP.NET 的全端網站，到台郡科技的數據分析；現在專注在資料探勘與數據可視化、工作流程數位化，以及把 agent 放進實際流程裡。」`role` 改 `Data & Workflow Engineer`（**待 Andy 確認**），`roleZh` 改「資料與流程工程師，海洋科學出身」。
+- `profile.ts` `intro[1]`：「後來轉進軟體：從 Vue、ASP.NET 的全端網站，到台郡科技的數據分析；現在專注在資料探勘與數據可視化、工作流程數位化，以及把 agent 放進實際流程裡。」`role` 改 `Data & Workflow Engineer`（Andy 已確認），`roleZh` 改「資料與流程工程師，海洋科學出身」。
 - `experience.ts` 最後一筆 `title`：「資料探勘、流程數位化與 Agent 應用」，`note`：「stock-analysis-app、scout、syssec、homelab」。
 - `README.md`、`index.html` meta description、`docs/DESIGN.md` 同步改措辭。
 
@@ -374,14 +374,16 @@ GPU 分級（`lib/gpu.ts`）：以 `WEBGL_debug_renderer_info` + `devicePixelRat
 - **移除 `ProjectProbe.tsx`**：從 `SceneRoot.tsx` 拿掉；`useSiteStore` 的 `pulse/firePulse` 若只有它在用就一起刪；相關單元測試更新。聲納 ping 改為 3.6 的掃描帶負責「回波」意象。
 - **刪 `ScienceNote.tsx`** 與五段的引用；`data-testid="science-note"` 的 e2e 斷言移除。
 
-## 6. 要 Andy 先做或回答的事（不回答就用預設）
+## 6. Andy 已回答（2026-11-02）與要先做的事
 
-1. **Sketchfab 下載**：§4.1 的隆頭魚（任一隻）、鹿角珊瑚、扇珊瑚、海葵、管水母、鮟鱇、Magnapinna、大王具足蟲，下載原始 glTF/OBJ 放到 Personal-Page 的 `raw/models/<slug>/`（gitignore）並註明來源網址。預設：沒拿到的用程序式備案或 Khronos/Quaternius/Smithsonian 直接抓得到的。
-2. **技能工具清單**：§2.1 標「待 Andy 補」的工具有沒有在用；預設只列現在已經寫在站上的工具。
-3. **職稱**：`Data & Workflow Engineer` 可以嗎；預設沿用 `Full-stack & Data Engineer`，只改中文副標。
-4. **stock-analysis-app** 要不要多寫兩個 highlight（例如資料來源、圖表種類）；預設維持兩條。
-5. **經歷改由新到舊**（跟 git log 與沉積層一致）；預設改。
-6. **本站要不要當一個「數據可視化」作品**列進作品集；預設不列。
+| # | 事項 | 決定 |
+|---|---|---|
+| 1 | Sketchfab 模型下載 | Andy 會下載。**格式選 Sketchfab 下載選單裡的 glTF**（自動轉檔的 zip，內含 `.gltf` + `.bin` + 貼圖），不要 USDZ；原始格式（OBJ／FBX／Blend）只有在 glTF 選項不存在時才拿。每個模型解壓到 Personal-Page 的 `raw/models/<slug>/`（gitignore），同資料夾放一個 `source.txt` 寫模型網址、作者、授權。攝影測量模型的 zip 可能上百 MB，沒關係，減面後才進 `public/models/`。 |
+| 2 | 新技能組的工具清單 | 不補，只列站上已經有的工具；§2.1 標「待 Andy 補」的項目全部拿掉 |
+| 3 | 職稱 | 改成 `Data & Workflow Engineer`，`roleZh`「資料與流程工程師，海洋科學出身」 |
+| 4 | stock-analysis-app | 維持現在兩條 highlight，只改 summary 措辭 |
+| 5 | 經歷由新到舊 | 改 |
+| 6 | 本站列為作品 | 不列（預設） |
 
 ## 7. 驗證與審視（Phase F）
 
