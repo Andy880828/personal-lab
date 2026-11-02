@@ -25,7 +25,7 @@
 | 第五輪實作 Phase C 模型素材管線 | [x] 2026-11-02 | [8e9764a](https://github.com/Andy880828/Personal-Page/commit/8e9764a)：release raw-models-v1 的 10 個模型 → 合計 688 KB；攝影測量模型烘頂點色後減面；1BNA 資料 [1e2405f](https://github.com/Andy880828/Personal-Page/commit/1e2405f)；size-limit 模型兩條在 Phase E 補上 |
 | 第五輪實作 Phase D 分層代表生物 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；另修海床岩塊碎裂 [912404a](https://github.com/Andy880828/Personal-Page/commit/912404a)；管水母模型為 CC-BY-NC-SA，Andy 確認保留 |
 | 第五輪實作 Phase E 海洋 × 代碼意象 | [x] 2026-11-02 | [cf92152](https://github.com/Andy880828/Personal-Page/commit/cf92152)：六個意象全做；size-limit 加模型兩條、頂端列像素測試、`ascii on` 冒煙測試；Playwright 互動測試本機全過（視覺基準未更新） |
-| 第五輪實作 Phase F 驗證、impeccable、PR | [ ] 進行中 | [Andy880828/Personal-Page#5](https://github.com/Andy880828/Personal-Page/pull/5) 已開；閃爍量測腳本 `scripts/flicker.mjs` 進 repo，各位置都不比 main 差到 1.5 以上；視覺基準由 CI 產生中；合併後跑正式站 impeccable |
+| 第五輪實作 Phase F 驗證、impeccable、PR | [ ] 進行中 | 依 Andy 指示直接推 main（[2351766](https://github.com/Andy880828/Personal-Page/commit/2351766)），[Andy880828/Personal-Page#5](https://github.com/Andy880828/Personal-Page/pull/5) 因此自動標為已合併；閃爍量測腳本 `scripts/flicker.mjs` 進 repo，各位置都不比 main 差到 1.5 以上；視覺基準由 CI 產生中；合併後跑正式站 impeccable |
 
 ### 第二、三輪（使用者回饋後）
 
