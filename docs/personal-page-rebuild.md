@@ -8,14 +8,28 @@
 | 階段 | 狀態 | 紀錄 |
 |---|---|---|
 | 計畫（本檔） | [x] 2026-11-02 | 使用者已確認四項決策 |
-| 開放問題回答 | [ ] | 見文末六題 |
-| Phase 0 盤點與資產 | [ ] | |
-| Phase 1 骨架（DOM 版 + CI） | [ ] | |
-| Phase 2 核心 3D 場景 | [ ] | |
-| Phase 3 互動元素 | [ ] | |
-| Phase 4 收斂與驗證 | [ ] | |
-| Phase 5 impeccable 視覺審視 | [ ] | |
-| PR 合併、Vercel production 確認 | [ ] | |
+| 開放問題回答 | [x] 依預設 | 使用者未回覆，全部採預設；需要確認的事項見 Personal-Page `docs/REVIEW.md`「沒有採納」 |
+| Phase 0 盤點與資產 | [x] 2026-11-02 | [a1f9a76](https://github.com/Andy880828/Personal-Page/commit/a1f9a76) |
+| Phase 1 骨架（DOM 版 + CI） | [x] 2026-11-02 | [a1f9a76](https://github.com/Andy880828/Personal-Page/commit/a1f9a76)：首屏 JS 90 KB gzip |
+| Phase 2 核心 3D 場景 | [x] 2026-11-02 | [fd923ce](https://github.com/Andy880828/Personal-Page/commit/fd923ce) |
+| Phase 3 互動元素 | [x] 2026-11-02 | [fd923ce](https://github.com/Andy880828/Personal-Page/commit/fd923ce) |
+| Phase 4 收斂與驗證 | [x] 2026-11-02 | [4bec028](https://github.com/Andy880828/Personal-Page/commit/4bec028)：Lighthouse 桌機 99/100/100/100、Playwright 21 項 |
+| Phase 5 impeccable 視覺審視 | [x] 2026-11-02 | [3419ef2](https://github.com/Andy880828/Personal-Page/commit/3419ef2)：偵測器 8 → 0 項，修好 tier 1 不渲染 3D |
+| PR 合併、Vercel production 確認 | [ ] | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已開，等使用者驗證與合併 |
+
+### 和計畫不同的地方
+
+| 計畫 | 實際 | 原因 |
+|---|---|---|
+| TypeScript 7 | TypeScript 6.0.3 | typescript-eslint 只支援到 TS 6.0 |
+| react-router 8 | 自寫 40 行 History API 小路由 | 只有三個「捲到某段」的網址，省約 30 KB 首屏 JS |
+| GSAP、Lenis 在首屏 | 首屏後才載入；首頁標題改純 CSS 逐字浮出 | 首屏 JS 原本 155 KB，超過 120 KB 預算 |
+| 技能氣泡用 `MeshTransmissionMaterial` | three 內建 `MeshPhysicalMaterial`（transmission + iridescence） | 五顆各自一個 FBO pass 太貴；內建透射一次處理全部 |
+| 段落標題上方放深度小標 | 深度刻度放在標題同一列右端 | impeccable craft-floor 明文禁止標題上方小標 |
+| leva、vite-plugin-glsl | 沒用 | 除錯只需要 r3f-perf；GLSL 用 Vite 內建 `?raw` |
+| 軟體算繪當 tier 1 | 軟體算繪（SwiftShader、llvmpipe）當 tier 0 | 只有幾 fps 且卡住捲動；也讓 CI 的 Lighthouse 量到首屏實況 |
+| GPU 偵測在主執行緒 | Web Worker + OffscreenCanvas | 主執行緒建 WebGL context 是 TBT 的最大來源 |
+| Lighthouse 手機版另跑一次 | 沒加 | 桌機 assert 已涵蓋；CI 無 GPU，手機數字參考價值低 |
 
 ---
 
