@@ -26,6 +26,7 @@
 | 第五輪實作 Phase D 分層代表生物 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；另修海床岩塊碎裂 [912404a](https://github.com/Andy880828/Personal-Page/commit/912404a)；管水母模型為 CC-BY-NC-SA，Andy 確認保留 |
 | 第五輪實作 Phase E 海洋 × 代碼意象 | [x] 2026-11-02 | [cf92152](https://github.com/Andy880828/Personal-Page/commit/cf92152)：六個意象全做；size-limit 加模型兩條、頂端列像素測試、`ascii on` 冒煙測試；Playwright 互動測試本機全過（視覺基準未更新） |
 | 第五輪實作 Phase F 驗證、impeccable、PR | [x] 2026-11-02 | 直接推 main（[2351766](https://github.com/Andy880828/Personal-Page/commit/2351766)）；正式站 impeccable 審視 15/28（P0 魚群黏在畫面上、越深越亮），修正 [9f20c03](https://github.com/Andy880828/Personal-Page/commit/9f20c03)：水色色彩空間、生物改掃描語言、一種元素只活在一段；新增 `tests/e2e/depth.spec.ts` |
+| 第五輪後續：捲動、入水事件、三次正式站審視 | [x] 2026-11-02 | 審視分數 15/28 → 18/24 → 23/32；捲動依段落長度等速下潛（[840f0d8](https://github.com/Andy880828/Personal-Page/commit/840f0d8)、[4a60b9f](https://github.com/Andy880828/Personal-Page/commit/4a60b9f)）；入水事件（斯涅爾窗、氣泡）與第三次審視修正 [bdb91e0](https://github.com/Andy880828/Personal-Page/commit/bdb91e0) |
 
 ### 第二、三輪（使用者回饋後）
 
