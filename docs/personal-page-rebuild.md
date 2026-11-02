@@ -18,6 +18,7 @@
 | PR 合併、Vercel production 確認 | [x] 2026-11-02 | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已合併（71305317）；`personal-page-gules.vercel.app` 已是新版，瀏覽器載入無錯誤 |
 | 第二輪：修閃爍、科學層、指令列、雙螺旋、互動 | [x] 2026-11-02 | [Andy880828/Personal-Page#2](https://github.com/Andy880828/Personal-Page/pull/2) 已合併 |
 | 第三輪：正式站 impeccable 審視修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#3](https://github.com/Andy880828/Personal-Page/pull/3) 已合併；偵測器 0 項；紀錄在 Personal-Page `docs/REVIEW.md` |
+| 第四輪：side-tab 修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#4](https://github.com/Andy880828/Personal-Page/pull/4) 已合併；正式站偵測器只剩 tier 0 SVG 雙螺旋的 advisory |
 
 ### 第二、三輪（使用者回饋後）
 
