@@ -16,6 +16,17 @@
 | Phase 4 收斂與驗證 | [x] 2026-11-02 | [4bec028](https://github.com/Andy880828/Personal-Page/commit/4bec028)：Lighthouse 桌機 99/100/100/100、Playwright 21 項 |
 | Phase 5 impeccable 視覺審視 | [x] 2026-11-02 | [3419ef2](https://github.com/Andy880828/Personal-Page/commit/3419ef2)：偵測器 8 → 0 項，修好 tier 1 不渲染 3D |
 | PR 合併、Vercel production 確認 | [x] 2026-11-02 | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已合併（71305317）；`personal-page-gules.vercel.app` 已是新版，瀏覽器載入無錯誤 |
+| 第二輪：修閃爍、科學層、指令列、雙螺旋、互動 | [x] 2026-11-02 | [Andy880828/Personal-Page#2](https://github.com/Andy880828/Personal-Page/pull/2) 已合併 |
+| 第三輪：正式站 impeccable 審視修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#3](https://github.com/Andy880828/Personal-Page/pull/3) 已合併；偵測器 0 項；紀錄在 Personal-Page `docs/REVIEW.md` |
+
+### 第二、三輪（使用者回饋後）
+
+- **閃爍**：正式站海面每幀閃動。原因是海面高光用 `pow(…,420)` 的逐像素閃點加上快速雜訊，Bloom 再放大；另外排除了天空球 `xyww` 深度技巧、後製 MSAA、`backdrop-filter`、效能降級重建幾何這幾個只在真 GPU 上會閃的構造。量測方法：`?slow=0.02` 放慢場景時間後連續截圖，相鄰幀差異由 10+ 降到 <1。
+- **科學層**：`src/content/science.ts`（壓力、溫度剖面、光衰減、分層帶、每段 field note 與來源）+ 右側遙測儀表（log 深度軸的溫度／光剖面）。
+- **Coding**：站內指令列（`/`）、`j`/`k`。
+- **技能段**：泡泡換成 DNA 雙螺旋。
+- **互動**：點擊驚散魚群、聲納、深層帶游標探照燈、水母 hover。
+- **正式站 impeccable 第二輪**：Nielsen 25/36；P1 全修（儀表蓋內容、停用表單、指令列與儀表相撞、手機溢出）。
 
 ### 和計畫不同的地方
 
