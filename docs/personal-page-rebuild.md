@@ -21,10 +21,10 @@
 | 第四輪：side-tab 修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#4](https://github.com/Andy880828/Personal-Page/pull/4) 已合併；正式站偵測器只剩 tier 0 SVG 雙螺旋的 advisory |
 | 第五輪計畫：海洋 × 代碼深度融合、分層生物、內容轉向 | [x] 2026-11-02 計畫完成、開放問題已回答 | 見下方「第五輪計畫」；尚未實作，等 Opus 派工；Sketchfab 模型由 Andy 以 glTF 格式下載到 `raw/models/` |
 | 第五輪實作 Phase A 內容轉向與去 AI 味 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)（分支 `round5/ocean-code`）；文案 lint `tests/unit/copy.test.ts` |
-| 第五輪實作 Phase B 頂端列、儀表、拿掉探測器 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；nav 像素測試尚未寫 |
-| 第五輪實作 Phase C 模型素材管線 | [x] 2026-11-02 | [8e9764a](https://github.com/Andy880828/Personal-Page/commit/8e9764a)：release raw-models-v1 的 10 個模型 → 合計 688 KB；攝影測量模型烘頂點色後減面；1BNA 資料 [1e2405f](https://github.com/Andy880828/Personal-Page/commit/1e2405f)；size-limit 模型兩條尚未加 |
-| 第五輪實作 Phase D 分層代表生物 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；另修海床岩塊碎裂 [912404a](https://github.com/Andy880828/Personal-Page/commit/912404a)；管水母模型為 CC-BY-NC-SA，待 Andy 確認 |
-| 第五輪實作 Phase E 海洋 × 代碼意象 | [ ] 進行中 | 已做：指令列提示字元、`cat zone`、`ascii` 指令、經歷由新到舊；未做：雙螺旋改讀 1BNA、字元海雪、等深線、魚群分群、地層帶、AsciiBand |
+| 第五輪實作 Phase B 頂端列、儀表、拿掉探測器 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；nav 像素測試在 Phase E 補上 |
+| 第五輪實作 Phase C 模型素材管線 | [x] 2026-11-02 | [8e9764a](https://github.com/Andy880828/Personal-Page/commit/8e9764a)：release raw-models-v1 的 10 個模型 → 合計 688 KB；攝影測量模型烘頂點色後減面；1BNA 資料 [1e2405f](https://github.com/Andy880828/Personal-Page/commit/1e2405f)；size-limit 模型兩條在 Phase E 補上 |
+| 第五輪實作 Phase D 分層代表生物 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；另修海床岩塊碎裂 [912404a](https://github.com/Andy880828/Personal-Page/commit/912404a)；管水母模型為 CC-BY-NC-SA，Andy 確認保留 |
+| 第五輪實作 Phase E 海洋 × 代碼意象 | [x] 2026-11-02 | [cf92152](https://github.com/Andy880828/Personal-Page/commit/cf92152)：六個意象全做；size-limit 加模型兩條、頂端列像素測試、`ascii on` 冒煙測試；Playwright 互動測試本機全過（視覺基準未更新） |
 | 第五輪實作 Phase F 驗證、impeccable、PR | [ ] | |
 
 ### 第二、三輪（使用者回饋後）
