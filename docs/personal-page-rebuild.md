@@ -15,7 +15,7 @@
 | Phase 3 互動元素 | [x] 2026-11-02 | [fd923ce](https://github.com/Andy880828/Personal-Page/commit/fd923ce) |
 | Phase 4 收斂與驗證 | [x] 2026-11-02 | [4bec028](https://github.com/Andy880828/Personal-Page/commit/4bec028)：Lighthouse 桌機 99/100/100/100、Playwright 21 項 |
 | Phase 5 impeccable 視覺審視 | [x] 2026-11-02 | [3419ef2](https://github.com/Andy880828/Personal-Page/commit/3419ef2)：偵測器 8 → 0 項，修好 tier 1 不渲染 3D |
-| PR 合併、Vercel production 確認 | [ ] | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已開；最新 commit CI 全綠（含 12 張視覺基準圖與 Lighthouse），Vercel 預覽 Ready（需登入 Vercel）；等使用者驗證與合併 |
+| PR 合併、Vercel production 確認 | [x] 2026-11-02 | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已合併（71305317）；`personal-page-gules.vercel.app` 已是新版，瀏覽器載入無錯誤 |
 
 ### 和計畫不同的地方
 
