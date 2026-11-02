@@ -15,7 +15,7 @@
 | Phase 3 互動元素 | [x] 2026-11-02 | [fd923ce](https://github.com/Andy880828/Personal-Page/commit/fd923ce) |
 | Phase 4 收斂與驗證 | [x] 2026-11-02 | [4bec028](https://github.com/Andy880828/Personal-Page/commit/4bec028)：Lighthouse 桌機 99/100/100/100、Playwright 21 項 |
 | Phase 5 impeccable 視覺審視 | [x] 2026-11-02 | [3419ef2](https://github.com/Andy880828/Personal-Page/commit/3419ef2)：偵測器 8 → 0 項，修好 tier 1 不渲染 3D |
-| PR 合併、Vercel production 確認 | [ ] | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已開，等使用者驗證與合併 |
+| PR 合併、Vercel production 確認 | [ ] | [Andy880828/Personal-Page#1](https://github.com/Andy880828/Personal-Page/pull/1) 已開；最新 commit CI 全綠（含 12 張視覺基準圖與 Lighthouse），Vercel 預覽 Ready（需登入 Vercel）；等使用者驗證與合併 |
 
 ### 和計畫不同的地方
 
@@ -30,6 +30,7 @@
 | 軟體算繪當 tier 1 | 軟體算繪（SwiftShader、llvmpipe）當 tier 0 | 只有幾 fps 且卡住捲動；也讓 CI 的 Lighthouse 量到首屏實況 |
 | GPU 偵測在主執行緒 | Web Worker + OffscreenCanvas | 主執行緒建 WebGL context 是 TBT 的最大來源 |
 | Lighthouse 手機版另跑一次 | 沒加 | 桌機 assert 已涵蓋；CI 無 GPU，手機數字參考價值低 |
+| 視覺基準圖在本機產生 | 由 CI 產生（commit 訊息加 `[update-snapshots]`），本機預設不比對 | 不同機器字型光柵化有次像素差異，中文換行會跟著變 |
 
 ---
 
