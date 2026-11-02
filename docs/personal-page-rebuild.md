@@ -20,11 +20,11 @@
 | 第三輪：正式站 impeccable 審視修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#3](https://github.com/Andy880828/Personal-Page/pull/3) 已合併；偵測器 0 項；紀錄在 Personal-Page `docs/REVIEW.md` |
 | 第四輪：side-tab 修正 | [x] 2026-11-02 | [Andy880828/Personal-Page#4](https://github.com/Andy880828/Personal-Page/pull/4) 已合併；正式站偵測器只剩 tier 0 SVG 雙螺旋的 advisory |
 | 第五輪計畫：海洋 × 代碼深度融合、分層生物、內容轉向 | [x] 2026-11-02 計畫完成、開放問題已回答 | 見下方「第五輪計畫」；尚未實作，等 Opus 派工；Sketchfab 模型由 Andy 以 glTF 格式下載到 `raw/models/` |
-| 第五輪實作 Phase A 內容轉向與去 AI 味 | [ ] | |
-| 第五輪實作 Phase B 頂端列、儀表、拿掉探測器 | [ ] | |
-| 第五輪實作 Phase C 模型素材管線 | [ ] | |
-| 第五輪實作 Phase D 分層代表生物 | [ ] | |
-| 第五輪實作 Phase E 海洋 × 代碼意象 | [ ] | |
+| 第五輪實作 Phase A 內容轉向與去 AI 味 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)（分支 `round5/ocean-code`）；文案 lint `tests/unit/copy.test.ts` |
+| 第五輪實作 Phase B 頂端列、儀表、拿掉探測器 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；nav 像素測試尚未寫 |
+| 第五輪實作 Phase C 模型素材管線 | [x] 2026-11-02 | [8e9764a](https://github.com/Andy880828/Personal-Page/commit/8e9764a)：release raw-models-v1 的 10 個模型 → 合計 688 KB；攝影測量模型烘頂點色後減面；1BNA 資料 [1e2405f](https://github.com/Andy880828/Personal-Page/commit/1e2405f)；size-limit 模型兩條尚未加 |
+| 第五輪實作 Phase D 分層代表生物 | [x] 2026-11-02 | [c734820](https://github.com/Andy880828/Personal-Page/commit/c734820)；另修海床岩塊碎裂 [912404a](https://github.com/Andy880828/Personal-Page/commit/912404a)；管水母模型為 CC-BY-NC-SA，待 Andy 確認 |
+| 第五輪實作 Phase E 海洋 × 代碼意象 | [ ] 進行中 | 已做：指令列提示字元、`cat zone`、`ascii` 指令、經歷由新到舊；未做：雙螺旋改讀 1BNA、字元海雪、等深線、魚群分群、地層帶、AsciiBand |
 | 第五輪實作 Phase F 驗證、impeccable、PR | [ ] | |
 
 ### 第二、三輪（使用者回饋後）
