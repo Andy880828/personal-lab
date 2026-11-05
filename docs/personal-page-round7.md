@@ -8,12 +8,12 @@
 
 | 階段 | 內容 | 狀態 |
 |---|---|---|
-| A | 會讓網站看起來壞掉的問題（P0） | [ ] |
-| B | 首屏到關於的轉場、10 秒內的定位 | [ ] |
-| C | 作品段的版面與文案 | [ ] |
-| D | 3D 與內容的關係 | [ ] |
-| E | 用語第二輪 | [ ] |
-| F | 細節、可及性、測試缺口 | [ ] |
+| A | 會讓網站看起來壞掉的問題（P0） | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
+| B | 首屏到關於的轉場、10 秒內的定位 | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
+| C | 作品段的版面與文案 | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
+| D | 3D 與內容的關係 | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
+| E | 用語第二輪 | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
+| F | 細節、可及性、測試缺口 | [x] 2026-11-05 [6dc2bf7](https://github.com/Andy880828/Personal-Page/commit/6dc2bf7) |
 
 ## 第六輪的成績單
 
@@ -111,12 +111,18 @@
 
 lint、型別、單元、build、size、Playwright；新增的 e2e：手機溢出（含 isMobile）、關於內文的 canvas 亮度上限、作品導言與篩選狀態。改文案後 `npm run fonts`；commit 帶 `[update-snapshots]`；部署後在正式站重量手機寬度。
 
+## 實作紀錄（2026-11-05）
+
+- 站主已決定：關於標題「從一條溪的 DNA，到一整套資料流程」、技能標題「五個方向的技能」、首屏加「代表作」列。
+- 驗證：單元 116、Playwright 38 全過（含新的 `?form=0` 手機溢出、作品篩選標題與說明）；重產 `public/og.jpg`。
+- 額外修的：段落標題被深度刻度擠窄（1440 寬時關於標題斷成「資料流／程」），改成放不下時刻度換行。
+- 沒做：關於內文的 canvas 亮度上限 e2e（珊瑚礁已移到左下，沒有再壓到文字，之後有回歸再加）；大頭照縮小／調暗（選做，看過截圖後不需要）。
+- 拿掉「儀表板設計」技能項（工具裡沒有對應），等站主補實際用過的工具再加回。
+
 ## 需要站主決定或補的
 
 | 項目 | 用在哪 |
 |---|---|
-| 關於段標題、技能標題要用哪個說法 | B3 |
-| 首屏要不要加「代表作」列 | B2 |
 | FORGE 排行榜／計分畫面截圖、成果數字 | C2、C7 |
 | syssec 封面的實際檢查輸出 | C3 |
 | Trim2Sort「過濾序列」的實際意思 | C5 |
