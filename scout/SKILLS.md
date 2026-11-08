@@ -111,7 +111,7 @@ missing in a week, not what is merely popular today.
 **Summary**: one sentence, ideally ≤ 60 字 (hard limit 200 chars). Say who
 did what and why it matters; concrete numbers beat adjectives; no hype words
 (「震撼」「顛覆」), no "本文介紹". Optional `why`: a few words on why it made
-the cut (shown nowhere by default, kept for the record).
+the cut (shown as 入選理由 on the exported site).
 
 ## 5. Daily briefing workflow
 
