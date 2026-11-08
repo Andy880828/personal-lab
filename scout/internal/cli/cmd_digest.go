@@ -237,8 +237,15 @@ func digestExportCmd() *Command {
 						return nil, err
 					}
 					all = append(all, d)
+					newer, older := "", ""
+					if i < len(dates)-1 {
+						newer = dates[i+1]
+					}
+					if i > 0 {
+						older = dates[i-1]
+					}
 					p := filepath.Join(*out, d.Date+".html")
-					if err := os.WriteFile(p, []byte(digest.HTMLPage(d)), 0o644); err != nil {
+					if err := os.WriteFile(p, []byte(digest.HTMLPage(d, newer, older, i+1)), 0o644); err != nil {
 						return nil, err
 					}
 					files = append(files, p)
